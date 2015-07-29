@@ -3,14 +3,15 @@ package com.example.user.timer;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.os.Handler;
 
-public class StopwatchFragment extends Fragment implements View.OnClickListener {
-    boolean timerRunning = false;
+public class StopwatchFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
 
     TextView timeTextView;
     Button startButton;
@@ -19,6 +20,9 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     Handler handler;
     Stopwatch stopwatch;
 
+    private int deltaX;
+    private int deltaY;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +30,8 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+
         return inflater.inflate(R.layout.timer, null);
     }
 
@@ -38,6 +44,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
         timeTextView = (TextView) getView().findViewById(R.id.timeTextView);
         startButton.setOnClickListener(this);
         resetButton.setOnClickListener(this);
+        timeTextView.setOnTouchListener(this);
 
         stopwatch = new Stopwatch();
         handler = new Handler();
@@ -46,7 +53,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
     Thread thread = new Thread(new Runnable() {
         @Override
         public void run() {
-                handler.post(runStopwatch);
+            handler.post(runStopwatch);
         }
     });
 
@@ -75,9 +82,29 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener 
             case R.id.resetButton:
                 stopwatch.reset();
                 handler.removeCallbacks(runStopwatch);
-                timeTextView.setText(R.string.timeZero);
+                timeTextView.setText(R.string.time_zero);
                 startButton.setText(R.string.start);
                 break;
         }
+    }
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        final int X = (int) event.getRawX();
+        final int Y = (int) event.getRawY();
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+                RelativeLayout.LayoutParams lParams = (RelativeLayout.LayoutParams) v.getLayoutParams();
+                deltaX = X - lParams.leftMargin;
+                deltaY = Y - lParams.topMargin;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) v.getLayoutParams();
+                layoutParams.leftMargin = X - deltaX;
+                layoutParams.topMargin = Y - deltaY;
+                v.setLayoutParams(layoutParams);
+                break;
+        }
+        return true;
     }
 }

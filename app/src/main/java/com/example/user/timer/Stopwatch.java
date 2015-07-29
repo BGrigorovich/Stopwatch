@@ -1,8 +1,5 @@
 package com.example.user.timer;
 
-import java.util.Calendar;
-import java.util.Date;
-
 public class Stopwatch {
     long startTime;
     long elapsedTime;
@@ -29,8 +26,8 @@ public class Stopwatch {
 
     public String toString() {
         long time = getTime();
-        long miliseconds = time % 1000 / 10;
-        String milisecondsStr = miliseconds < 10 ? "0" + String.valueOf(miliseconds) : String.valueOf(miliseconds);
+        long miliseconds = time % 1000 / 100;
+        String milisecondsStr = String.valueOf(miliseconds);
         long seconds = time / 1000 % 60;
         String secondsStr = seconds < 10 ? "0" + String.valueOf(seconds) : String.valueOf(seconds);
         long minutes = time / 60000 % 60;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:tag="timer_tag"
     android:weightSum="1">
@@ -10,31 +10,32 @@
         android:id="@+id/timeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:text="@string/timeZero"
-        android:textSize="84sp" />
-
-    <Button
-        android:id="@+id/startButton"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_below="@+id/timeTextView"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/start"
+        android:text="@string/time_zero"
         android:textSize="40sp" />
 
-    <Button
-        android:id="@+id/resetButton"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignEnd="@+id/startButton"
-        android:layout_alignStart="@+id/startButton"
-        android:layout_below="@+id/startButton"
-        android:layout_marginTop="10dp"
-        android:text="@string/reset"
-        android:textSize="40sp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/timeTextView"
+        android:layout_alignStart="@+id/timeTextView"
+        android:layout_below="@+id/timeTextView">
 
+        <Button
+            android:id="@+id/startButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/start"
+            
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/resetButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/reset"
+            android:textSize="16sp" />
+    </LinearLayout>
 </RelativeLayout>
