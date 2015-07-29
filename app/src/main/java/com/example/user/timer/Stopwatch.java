@@ -33,6 +33,10 @@ public class Stopwatch {
         long minutes = time / 60000 % 60;
         String minutesStr = minutes < 10 ? "0" + String.valueOf(minutes) : String.valueOf(minutes);
 
+        if (time > 3600000) {
+            String hoursStr = String.valueOf(time / 3600000 % 60);
+            return hoursStr+ ":" + minutesStr + ":" + secondsStr + ":" + milisecondsStr;
+        }
         return minutesStr + ":" + secondsStr + ":" + milisecondsStr;
     }
 }

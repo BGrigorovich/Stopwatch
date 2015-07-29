@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.os.Handler;
@@ -14,8 +15,9 @@ import android.os.Handler;
 public class StopwatchFragment extends Fragment implements View.OnClickListener, View.OnTouchListener {
 
     TextView timeTextView;
-    Button startButton;
-    Button resetButton;
+    ImageButton startButton;
+    ImageButton resetButton;
+    ImageButton closeButton;
 
     Handler handler;
     Stopwatch stopwatch;
@@ -39,12 +41,14 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener,
     public void onStart() {
         super.onStart();
 
-        startButton = (Button) getView().findViewById(R.id.startButton);
-        resetButton = (Button) getView().findViewById(R.id.resetButton);
+        startButton = (ImageButton) getView().findViewById(R.id.startButton);
+        resetButton = (ImageButton) getView().findViewById(R.id.resetButton);
         timeTextView = (TextView) getView().findViewById(R.id.timeTextView);
+        closeButton = (ImageButton) getView().findViewById(R.id.closeButton);
         startButton.setOnClickListener(this);
         resetButton.setOnClickListener(this);
         timeTextView.setOnTouchListener(this);
+        closeButton.setOnClickListener(this);
 
         stopwatch = new Stopwatch();
         handler = new Handler();
@@ -60,7 +64,7 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener,
     Runnable runStopwatch = new Runnable() {
         @Override
         public void run() {
-            handler.postDelayed(runStopwatch, 10);
+            handler.postDelayed(runStopwatch, 100);
             timeTextView.setText(stopwatch.toString());
         }
     };
@@ -72,18 +76,21 @@ public class StopwatchFragment extends Fragment implements View.OnClickListener,
                 if (stopwatch.isRunning) {
                     stopwatch.stop();
                     handler.removeCallbacks(runStopwatch);
-                    startButton.setText(R.string.start);
+                    startButton.setImageResource(R.drawable.start);
                 } else {
                     stopwatch.start();
                     handler.post(thread);
-                    startButton.setText(R.string.stop);
+                    startButton.setImageResource(R.drawable.pause);
                 }
                 break;
             case R.id.resetButton:
                 stopwatch.reset();
                 handler.removeCallbacks(runStopwatch);
                 timeTextView.setText(R.string.time_zero);
-                startButton.setText(R.string.start);
+                startButton.setImageResource(R.drawable.start);
+                break;
+            case R.id.closeButton:
+                getActivity().getFragmentManager().beginTransaction().remove(this).commit();
                 break;
         }
     }

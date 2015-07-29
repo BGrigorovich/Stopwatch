@@ -8,11 +8,13 @@
 
     <TextView
         android:id="@+id/timeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:background="@drawable/rectangle_text_view"
+        android:gravity="center"
         android:text="@string/time_zero"
-        android:textSize="40sp" />
+        android:textColor="#000000"
+        android:textSize="30sp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -21,21 +23,33 @@
         android:layout_alignStart="@+id/timeTextView"
         android:layout_below="@+id/timeTextView">
 
-        <Button
+        <ImageButton
             android:id="@+id/startButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
             android:layout_weight="1"
-            android:text="@string/start"
-            
-            android:textSize="16sp" />
+            android:background="@drawable/rectangle_left_button"
+            android:scaleType="fitCenter"
+            android:src="@drawable/start"
+            android:text="@string/start" />
 
-        <Button
+        <ImageButton
             android:id="@+id/resetButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
             android:layout_weight="1"
-            android:text="@string/reset"
-            android:textSize="16sp" />
+            android:background="@drawable/rectangle_right_button"
+            android:scaleType="fitCenter"
+            android:src="@drawable/stop" />
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/closeButton"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignEnd="@+id/timeTextView"
+        android:layout_alignTop="@+id/timeTextView"
+        android:background="@drawable/rounded"
+        android:scaleType="fitCenter"
+        android:src="@drawable/close" />
 </RelativeLayout>
